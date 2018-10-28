@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="lib/bs/bootstrap.min.css">
+    <link rel="stylesheet" href="./css/style.css">
+    <link rel="shortcut icon" type="image/png" href="img/logo.png">
+    <title>Meme Generator</title>
+</head>
+
+<body onload="init()">
+    <div class="bg-video">
+        <video class="bg-video__content" autoplay muted loop>
+            <source src="./lib/img/video.mp4" type="video/mp4">
+            <source src="./lib/img/video.webm" type="video/webm">
+            Your browser is not sepported!
+        </video>
+    </div>
+    <header class="header">
+        <!-- Image and text -->
+        <nav class="navbar navbar-light bg-light">
+            <a class="navbar-brand d-flex" href="index.html">
+                <img src="img/9gag-logo.png" width="30" height="30" class="d-inline-block align-top" alt="">
+                <span class="logo-text">Meme Generator</span>
+            </a>
+            <div class="lang lang-he"></div>
+            <div class="lang lang-en"></div>
+        </nav>
+
+        <div class="header__title">
+            <h1 class="title">Create your own meme</h1>
+        </div>
+    </header>
+    <div class="card text-center container main">
+        <div class="card-header">
+            <ul class="nav nav-tabs card-header-tabs" id="side-nav">
+                <li class="nav-item">
+                    <a id="img" class="nav-link active" href="#" onclick="handlePage('select-img' , this)">Select
+                        Background</a>
+                </li>
+
+                <li class="nav-item">
+                    <a id="template" class="nav-link" href="#" onclick="handlePage('select-text' , this)">create meme</a>
+                </li>
+
+            </ul>
+        </div>
+        <div class="card-body select-img">
+            <nav class="navbar-form">
+                <form class="search-form search"  onsubmit="startSearch(event)">
+                    <input class="search__input" type="search" placeholder="Search by key word" aria-label="Search" oninput="startSearch(event)">
+                    <button class="search__button">
+                        <svg class="search__icon">
+                            <use xlink:href="img/sprite.svg#icon-magnifying-glass"></use>
+                        </svg>
+                    </button>
+                </form>
+
+                <label id="imageLabel" for="imageForm">upload image</label>
+                <input type="file" id="imageForm" name="imageForm" onchange="onFileInputChange(event)" />
+                
+            </nav>
+
+            <h5 class="card-title">select your image</h5>
+            <div class="album py-5 ">
+                <div class="container">
+                    <div class="album__row row"></div>
+                </div>
+                <p class="float-right">
+                    <a href="#" class="scrollToTop btn-next">Back to top</a>
+                </p>
+            </div>
+
+            <a href="#" class="btn btn-next scrollToTop" onclick="nextPage('select-text', 'template')">next step
+                &rightarrow;</a>
+        </div>
+
+        <!-- CANVAS CREATION -->
+        <div class="card-body select-text d-none">
+            <h5 class="card-title">customize your meme</h5>
+            <div class="dropdown">
+                <a class="btn dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    options
+                </a>
+                
+                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuLink">
+                    <a class="dropdown-item share" href="#">Share</a>
+                    <a class="dropdown-item" href="#" onclick="downloadImg(this)" download="my-img.jpg">Download</a>
+                </div>
+            </div>
+
+            <div class="publish-form-container"></div>
+
+            <div class="canvas-container container d-flex">
+                <div class="row row-canvas">
+                    <div class="col on-canvas">
+                        <!-- <canvas class="canvas static-canvas"></canvas> -->
+                        <canvas class="canvas dynamic-canvas" onclick="clickForTextBox(event)"></canvas>
+                    </div>
+
+                    <div class="col controllers-panel">
+                        <div class="canvas-style">
+                            <h3 class="card-title canvas-title" onclick="toggleEditor()">more options</h3>
+                            <h5 class="card-title">select tamplate</h5>
+                            
+                            <div class="tamplates">
+
+                                <input type="radio" name="tamplate" id="top-title" class="top-title" onchange="renderCanvas()">
+                                <label class="tamplate"for="top-title">
+                                    <span class="top">top</span>
+                                </label>
+
+                                <input type="radio" name="tamplate" id="bottom-title" class="bottom-title" onchange="renderCanvas()">
+                                <label class="tamplate"for="bottom-title">
+                                    <span class="bottom bottom-fix">bottom</span>
+                                </label>
+
+                                <input type="radio" name="tamplate" id="double-title" class="double-title" onchange="renderCanvas()">
+                                <label class="tamplate"for="double-title">
+                                    <span class="top">top</span>
+                                    <span class="bottom">bottom</span>
+                                </label>
+
+                                <input type="radio" name="tamplate" id="solid" class="no-title" onchange="renderCanvas()" checked>
+                                <label class="tamplate"for="solid"> 
+                                </label>
+                            </div>
+
+                            <div class="tamplates-item color-wheel">
+                                <ul class="color-wheel-list">
+                                    <li id="black" class="color-item" onclick="changeTColor(this)"></li>
+                                    <li id="yellow" class="color-item" onclick="changeTColor(this)"></li>
+                                    <li id="red" class="color-item" onclick="changeTColor(this)"></li>
+                                    <li id="blue" class="color-item" onclick="changeTColor(this)"></li>
+                                    <li class="color-item add-color" onclick="openFontNav('#color-title')"> 
+                                        <span> &#x2b;</span>
+                                    </li>
+                                </ul>
+                            </div>
+
+                            <div id="color-title" class="nav-background">
+                                <h5 class="card-title tamplate-title">select color</h5>
+                                <span class="left-span tamplate-span back-span" onclick="closeNav('#color-title')">&#x3c; </span>
+
+                                <div class="wheel hidden" id="colorWheelS"></div>
+                                <div class="selected-color title-background"><input type="hidden" name="colorate" id="color-input" class="title-color"></div>
+                            </div>
+                            
+                        </div>
+
+                        <h5 class="card-title controllers-title" onclick="toggleMainNav()">text style</h5>
+                        <div class="controllers-item text-preview">Preview Text</div>
+                        <div class="controllers-item font-style">
+                            <span class="text">sans-serif</span>
+                            <span class="right-span" onclick="openFontNav('#font-picker')"> | &#x3e;</span>
+                        </div>
+                        <div id="font-picker" class="nav-background">
+                            <h5 class="card-title controllers-title">
+                                <span class="left-span back-span" onclick="closeNav('#font-picker')">&#x3c; </span>
+                                select font
+                            </h5>
+                            <ul class="font-list">
+                                <li class="font-item" onclick="changeFont(this)">sans-serif</li>
+                                <li class="font-item" onclick="changeFont(this)">chunkfive</li>
+                                <li class="font-item" onclick="changeFont(this)">roboto</li>
+                                <li class="font-item" onclick="changeFont(this)">lato</li>
+                                <li class="font-item" onclick="changeFont(this)">leagueGothic</li>
+                            </ul>
+                        </div>
+
+                        <div class="controllers-item font-size">
+                            <span class="minus left-span" onclick="changeFontSize(this)">&#x2212; |</span>
+                            <span class="size-val"> 16 </span>
+                            <span class="plus right-span" onclick="changeFontSize(this)">| &#x2b;</span>
+                        </div>
+
+                        <div class="controllers-item color-wheel">
+                            <ul class="color-wheel-list">
+                                <li id="black" class="color-item" onclick="changeColor(this)"></li>
+                                <li id="yellow" class="color-item" onclick="changeColor(this)"></li>
+                                <li id="red" class="color-item" onclick="changeColor(this)"></li>
+                                <li id="blue" class="color-item" onclick="changeColor(this)"></li>
+                                <li class="color-item add-color" onclick="openFontNav('#color-picker')"> <span> &#x2b;
+                                    </span></li>
+                            </ul>
+                        </div>
+                        <div id="color-picker" class="nav-background">
+                            <h5 class="card-title controllers-title">
+                                <span class="left-span back-span" onclick="closeNav('#color-picker')">&#x3c; </span>
+                                select color
+                            </h5>
+                            <div class="wheel hidden" id="colorWheel"></div>
+                            <div class="selected-color"></div>
+                        </div>
+
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <img src="./img/blank300x300.jpg" class="d-none">
+    </div>
+
+    <footer class="footer">
+        <div class="footer-jumbotron jumbotron">
+            <div class="footer-container container">
+                <p class="lead">Made by Orpaz Lazar and Ilan roitlender</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="lib/jquery/jquery-3.3.1.min.js"></script>
+    <script src="lib/iro.js-master/iro.min.js"></script>
+    <script src="lib/iro.js-master/colorPicker.js"></script>
+    <script src="lib/tooltip/tooltip.min.js"></script>
+    <script src="lib/pooper/popper.min.js"></script>
+    <script src="lib/bs/bootstrap.min.js"></script>
+
+    <script src="js/filesHandler.js"></script>
+    <script src="js/main.js"></script>
+    <script src="js/util-service.js"></script>
+    <script src="js/page-service.js"></script>
+    <script src="js/render.js"></script>
+    <script src="js/controller.js"></script>
+    <script src="js/search.js"></script>
+
+</body>
+
+</html>
