@@ -100,7 +100,7 @@ function changeFontSize(sign) {
     if ((+$('.size-val').text() >= 30 && $(sign).hasClass('plus')) || (+$('.size-val').text() <= 10 && $(sign).hasClass('minus'))) return;
     $(sign).hasClass('plus') ? getCurrTxt().size++ : getCurrTxt().size--;
 
-    $('.size-val').text(getCurrTxt().size);
+    $('.size-val').text(Math.ceil(getCurrTxt().size));
     setStyle('size');
 }
 
