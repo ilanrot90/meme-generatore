@@ -97,8 +97,7 @@
             <div class="canvas-container container d-flex">
                 <div class="row row-canvas">
                     <div class="col on-canvas">
-                        <!-- <canvas class="canvas static-canvas"></canvas> -->
-                        <canvas class="canvas dynamic-canvas" onclick="clickForTextBox(event)"></canvas>
+                            <canvas class="canvas dynamic-canvas" onclick="drow(event)"></canvas>
                     </div>
 
                     <div class="col controllers-panel">
@@ -108,23 +107,23 @@
                             
                             <div class="tamplates">
 
-                                <input type="radio" name="tamplate" id="top-title" class="top-title" onchange="renderCanvas()">
+                                <input type="radio" name="tamplate" id="top-title" class="radio__group top-title" onchange="setCanvasTemplate(this)">
                                 <label class="tamplate"for="top-title">
                                     <span class="top">top</span>
                                 </label>
 
-                                <input type="radio" name="tamplate" id="bottom-title" class="bottom-title" onchange="renderCanvas()">
+                                <input type="radio" name="tamplate" id="bottom-title" class="radio__group bottom-title" onchange="setCanvasTemplate(this)">
                                 <label class="tamplate"for="bottom-title">
                                     <span class="bottom bottom-fix">bottom</span>
                                 </label>
 
-                                <input type="radio" name="tamplate" id="double-title" class="double-title" onchange="renderCanvas()">
+                                <input type="radio" name="tamplate" id="double-title" class="radio__group double-title" onchange="setCanvasTemplate(this)">
                                 <label class="tamplate"for="double-title">
                                     <span class="top">top</span>
                                     <span class="bottom">bottom</span>
                                 </label>
 
-                                <input type="radio" name="tamplate" id="solid" class="no-title" onchange="renderCanvas()" checked>
+                                <input type="radio" name="tamplate" id="solid" class="radio__group no-title" onchange="setCanvasTemplate(this)" checked>
                                 <label class="tamplate"for="solid"> 
                                 </label>
                             </div>
@@ -221,13 +220,11 @@
     <script src="lib/bs/bootstrap.min.js"></script>
 
     <script src="js/filesHandler.js"></script>
-    <script src="js/main.js"></script>
+    <script src="js/search.js"></script>
     <script src="js/util-service.js"></script>
     <script src="js/page-service.js"></script>
     <script src="js/render.js"></script>
-    <script src="js/controller.js"></script>
-    <script src="js/search.js"></script>
-
+    <script src="js/main.js"></script>
 </body>
 
 </html>

@@ -28,8 +28,9 @@ var gImages = [
 ];
 // var gMeme;
 var gMeme = {
-    id: 'blank',
-    txts: [
+    titles: { id: 'solid' },
+
+    text: [
         {
             id: makeId(),
             txt: '',
@@ -44,91 +45,76 @@ var gMeme = {
     ],
 };
 
-function getElCurrImg() {
-    var currMemeObj = getMeme();
-    var imgObj;
-    if (currMemeObj.id === 'blank') {
-        imgObj = getBlankImg();
-    } else {
-        imgObj = getImgById(currMemeObj.id);
+
+function getGMeme() {
+    return gMeme;
+}
+
+function createNewTxt() {
+    let txt = {
+        id: makeId(),
+            txt: '',
+            font: $('.text-preview').css("font-family"),
+            size: $('.text-preview').css("font-size").slice(0,-2),
+            color: $('.text-preview').css("color"),
+            pos: {
+                x: 20,
+                y: 50,
+            }
     }
-    var elImg = $(`img[src="${imgObj.url}"]`);
-    // console.log('elImg:',currMemeObj);
-    return elImg[0];
+    getGMeme().text.push(txt);
 }
 
-function getImgById(id) {
-    return gImages.find(img => img.id === id);
+function getCurrTxt() {
+    return gMeme.text[gMeme.text.length - 1];
 }
 
-function setMemeById(id) {
-    gMeme = gImages.find(img => img.id === id);
+function setImage (imgId) {
+    gMeme.img = gImages.find(image => image.id === imgId);
 }
 
 function getImgs() {
     return gImages;
 }
 
-function getMeme() {
-    return gMeme;
+function getSize() {
+    if($( window ).width() > 420 ) return 400;
+
+    return window.innerWidth ; 
 }
 
-function getBlankImg() {
-    return {
-        id: 'blank',
-        url: './img/blank300x300.jpg',
-        keywords: ['blank']
-    };
-}
+function createTxtBox(ev, val) {
+    let txtBox = $(`<input type='text' data-id='${getCurrTxt().id}' class='txt-box' 
+                        onkeydown='createText(event, this)' onfocusout='submitTxt()' onchange='setVal(this.value)' value='${val}'></input>`);
 
-function setMemeTxtById(id,txt = gMeme.txts[getCurrTxtIdxById(id)].txt,font = getCurrFontById(id),size = getCurrFontSizeById(id),color = getCurrColorById(id),pos = getCurrTextBoxPosById(id)) {
-    gMeme.txts[getCurrTxtIdxById(id)] = {
-        id,
-        txt,
-        font,
-        size,
-        color,
-        pos,
-    };
-}
-function createMemeTxt(txt = '',font = 'sans-serif',size = gMeme.txts[gMeme.txts.length - 1].size ,color = 'black',pos = {x: 20, y: 50}) {
-    gMeme.txts.push({
-        id: makeId(),
-        txt,
-        font,
-        size,
-        color,
-        pos,
+    txtBox.css({
+        'position' : 'absolute',
+        'top' : ev.clientY -  getCurrTxt().size + 'px',
+        'left' : ev.clientX + 'px',
+        'width' : (txtBox.val().length + 5) * 5 + 'px',
+        'max-width' : calcMaxWidth(ev),
+        'font-family' : getCurrTxt().font,
+        'font-size' : getCurrTxt().size,
+        'color' : getCurrTxt().color
     });
-}
 
-function getCurrTxtIdxById(id) {
-    return gMeme.txts.findIndex(txt => txt.id === id);
-}
-
-function getCurrTxtById(id) {
-    return gMeme.txts.find(txt => txt.id === id);
-}
-
-function getCurrColorById(id) {
-    return gMeme.txts.find(txt => txt.id === id).color;
-}
-
-function getCurrFontSizeById(id) {
-    return gMeme.txts.find(txt => txt.id === id).size;
-}
-
-function getCurrFontById(id) {
-    return gMeme.txts.find(txt => txt.id === id).font;
-}
-
-
-
-function getMousePos(canvas, ev) {
-    var rect = canvas.getBoundingClientRect();
+    $('body').append(txtBox);
+    if(val !== '') getCurrTxt().txt = val;
     
+    txtBox.focus();   
+}
+
+function calcMaxWidth(e) {
+    let rect = getCanvas().getBoundingClientRect();
+
+    return rect.right - e.clientX + 'px';
+}
+
+function getPos(canvas, e) {
+    let rect = canvas.getBoundingClientRect();
+
     return {
-      x: ev.clientX - rect.left,
-      y: ev.clientY - rect.top
+        x: e.clientX - rect.left,
+        y: e.clientY - rect.top
     };
 }

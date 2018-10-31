@@ -1,52 +1,10 @@
-.canvas-settings{
-    justify-content: center;
-    align-items: center;
-
-}
-
-.canvas-container {
-    justify-content: space-around;
-    min-height: 420px;
-}
-
-/* .canvas {
-    max-width: 400px;
-} */
-
-.title-color {
-    width: 100%;
-    padding: 0;
-}
-
-.canvas {
-    outline: 1px solid black;
-}
-.on-canvas {
-    position: relative;
-    display: flex;
-    align-items: center;
-}
-
-/* .text-box, .text-box-container {
-    z-index: 3;
-    outline: 1px dashed red;
-} */
-
-.on-canvas input:focus {
-    outline: 0;
-}
-#floatTextBox {
-    text-align: center;
-}
-.floatTextBox {
+.txt-box {
+    background-color: transparent;
+    z-index: 1;
     border: 0;
-}
-.floatTextBox:focus {
-    border: 1px dashed #d4d1d1;
+    min-width: 1rem;
 }
 
-@media (max-width: 420px) {
-    .canvas.dynamic-canvas {
-        width: 100%;
-    }
+.txt-box:focus {
+    border: 1px dashed #d4d1d1;
 }

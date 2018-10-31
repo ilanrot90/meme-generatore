@@ -50,6 +50,7 @@ function handleImageFromInput(ev, onImageReady) {
         img.onload = onImageReady.bind(null, img)
         img.src = event.target.result;
     }
+    
     reader.readAsDataURL(ev.target.files[0]);
     console.log(ev.target.files[0])
 }

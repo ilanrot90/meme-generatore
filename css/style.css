@@ -337,7 +337,7 @@ body {
 }
 
 .open {
-    top: 13.5%;
+    top:0;
 }
 
 .canvas-title {
@@ -355,7 +355,7 @@ body {
 .tamplates {
     display: flex;
     justify-content: space-evenly;
-    padding: 2.5rem;
+    padding: 1rem;
     margin-top: 1.5rem;
     flex-wrap: wrap;
 }
@@ -463,6 +463,8 @@ input[type='file'] {
     top: 5rem;
     right: 4rem;
 }
+
+.dropdown {top: 1rem}
 
 .dropdown-toggle {
     background-color: #1679e4;
@@ -581,9 +583,14 @@ input[type='file'] {
     }
     .on-canvas {
         position: relative;
+        display: flex;
+        align-items: center;
+    }
+    .on-canvas input:focus {
+        outline: 0;
     }
 
-    .dynamic-canvas {
+    .dynamic-canvas{
         left: 50% !important;
         transform: translateX(-50%);
         top: 10px;
@@ -655,10 +662,14 @@ input[type='file'] {
         height: 90vh;
     }
     .canvas-style {
-        top: 311px;
+        top: 350px;
     }
     .left-span {
         top: 1rem;
+    }
+
+    .back-span {
+        top: 4rem;
     }
 
     .open {
