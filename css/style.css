@@ -22,18 +22,6 @@ body {
     box-sizing: border-box;
 }
 
-/* .backgroand-image {
-    background-image: linear-gradient(to right bottom, rgba(28, 31, 78, 0.212), rgba(0, 110, 255, 0.219)), url(../img/back.jpg);
-    position: fixed;
-    height: 100vh;
-    width: 100vw;
-    z-index: -10;
-    background-position: center;
-    background-size: cover;
-    top: 0;
-    left: 0;
-} */
-
 .bg-video {
     position: absolute;
     top: 0;
@@ -49,20 +37,6 @@ body {
     width: 100%;
     height: 100%;
     object-fit: cover;
-}
-
-.lang {
-    width: 10px;
-    height: 10px;
-}
-
-.lang-he {
-    background-image: url(../img/langs/he-il.png);
-
-}
-
-.lang-en {
-    background-image: url(../img/langs/en-us.png);
 }
 
 .title {
@@ -88,11 +62,6 @@ body {
 .navbar-brand img {
     margin: 0 1rem;
     max-height: 80px;
-}
-
-/* disabled btn */
-.disabled {
-    cursor: default;
 }
 
 .nav-link , 
@@ -288,7 +257,7 @@ body {
 
 .selected-color {
     position: absolute;
-    top: 4rem;
+    top: 7rem;
     right: 2rem;
     width: 5rem;
     height: 5rem;
